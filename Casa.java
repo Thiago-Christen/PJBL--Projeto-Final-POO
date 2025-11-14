@@ -1,50 +1,26 @@
 package PJBL;
 
-public class Casa extends Imovel implements Alugavel, Vendavel {
-    protected double precoBase;
-    protected double tamTerreno;
-    protected boolean possuiGaragem;
-    protected boolean possuiQuintal;
+public class Casa extends Imovel{
+    protected int quartos;
+    protected int banheiros;
+    protected  double area;
+    protected  boolean garagem;
+    protected boolean quintal;
 
-    public Casa(int id, String descricao, String endereco, String complemento, double precoBase,
-                boolean disponivelVenda, boolean disponivelAluguel, double tamTerreno,
-                boolean possuiGaragem, boolean possuiQuintal) {
-        super(id,descricao,endereco,complemento,disponivelVenda,disponivelAluguel);
-        this.precoBase = precoBase;
-        this.tamTerreno = tamTerreno;
-        this.possuiGaragem = possuiGaragem;
-        this.possuiQuintal = possuiQuintal;
+
+    public Casa(int id, String titulo, String endereco, double preco,
+                int quartos, int banheiros, double area, boolean garagem, boolean quintal) {
+        super(id, titulo, endereco, preco);
+        this.quartos = quartos;
+        this.banheiros = banheiros;
+        this.area = area;
+        this.garagem = garagem;
+        this.quintal = quintal;
     }
 
     @Override
-    public double calcularPrecoAluguelMensal() {
-        return (precoBase * 0.007);
-    }
-
-    @Override
-    public void alugar() {
-        if (disponivelAluguel) {
-            System.out.println("Este imóvel pode ser alugado por" + calcularPrecoAluguelMensal()+ "reais");
-        }
-        else {
-            System.out.println("Imóvel indisponível");
-        }
-    }
-
-    @Override
-    public double calcularPrecoVenda() {
-        double valorFinal = precoBase;
-        if(possuiQuintal) valorFinal *= 1.05;
-        return valorFinal;
-    }
-
-    @Override
-    public void vender() {
-        if (disponivelVenda) {
-            System.out.println("Esse imóvel pode ser vendido por" +  calcularPrecoVenda()+ "reais");
-        }
-        else {
-            System.out.println("Imóvel indisponível");
-        }
+    public void exibirDetalhes() {
+        System.out.println("Casa: " + toString());
+        System.out.println("Quartos: " + quartos + " | Banheiros: " + banheiros + " | Área: " + area + "m² | Quintal: " + (quintal ? "Sim" : "Não") + "Garagem: " + (garagem ? "Sim" : "Não"));
     }
 }
