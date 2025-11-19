@@ -1,0 +1,3 @@
+id,tipo,titulo,endereco,preco,quartos,banheiros,area,andar,sacada,valorCondominio,garagem,quintal,status,reservadoPorCliente,reservadoPorCorretor,dataReserva,observacoes,visitas
+1,apartamento,"Caserão Solar","Av Torres, 102",350000.0,4,,100.0,2,false,0.0,,false,reservado,"Oswaldo","Cleber","2025-11-20 14:20","",0
+2,casa,"Casa Azul","Rua Neymar Copa, 2026",1000000.0,4,2,200.0,,,,true,true,reservado,"Vini Junior","Titi","2025-11-15 18:59","",0

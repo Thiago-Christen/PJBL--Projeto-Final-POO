@@ -1,6 +1,7 @@
 package PJBL;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Imovel {
     protected int id;
@@ -9,9 +10,12 @@ public abstract class Imovel {
     protected double preco;
     protected String status;
     protected int visitas;
-    protected String reservadoPor;
-    protected LocalDate dataReserva;
+    protected String reservadoPorCliente;
+    protected String reservadoPorCorretor;
+    protected LocalDateTime dataReserva;
     protected String observacoes;
+
+    public static final DateTimeFormatter DATETIME_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public Imovel(int id, String titulo, String endereco, double preco) {
         this.id = id;
@@ -20,32 +24,43 @@ public abstract class Imovel {
         this.preco = preco;
         this.status = "disponivel";
         this.visitas = 0;
-        this.reservadoPor = "";
+        this.reservadoPorCliente = "";
+        this.reservadoPorCorretor = "";
         this.dataReserva = null;
         this.observacoes = "";
     }
 
-    public boolean reservar(String clienteNome, LocalDate data) {
+    public boolean reservar(String nomeCliente, String nomeCorretor, LocalDateTime dataHora) {
         if (!"disponivel".equalsIgnoreCase(status)) return false;
         this.status = "reservado";
-        this.reservadoPor = clienteNome;
-        this.dataReserva = data;
+        this.reservadoPorCliente = nomeCliente;
+        this.reservadoPorCorretor = nomeCorretor;
+        this.dataReserva = dataHora;
         return true;
     }
+
     public boolean cancelarReserva() {
         if (!"reservado".equalsIgnoreCase(status)) return false;
         this.status = "disponivel";
-        this.reservadoPor = "";
+        this.reservadoPorCliente = "";
+        this.reservadoPorCorretor = "";
         this.dataReserva = null;
         return true;
     }
+
+    public void incrementarVisita() { visitas++; }
 
     @Override
     public String toString() {
         return id + " - " + titulo + " - " + endereco + " - R$" + preco + " - " + status;
     }
 
+    protected String reservaToCsvField() {
+        return (dataReserva == null) ? "" : dataReserva.format(DATETIME_FMT);
+    }
+
     public abstract void exibirDetalhes();
 
-    public void incrementarVisita() { visitas++; }
+    // método para gerar a linha CSV
+    public abstract String toCsvLine();
 }

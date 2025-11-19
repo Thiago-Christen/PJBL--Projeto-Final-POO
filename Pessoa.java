@@ -16,4 +16,9 @@ public abstract class Pessoa {
     }
 
     public abstract void exibirResumo();
+
+    @Override
+    public String toString() {
+        return id + " - " + nome + " | " + telefone + " | " + email;
+    }
 }
